@@ -1,7 +1,7 @@
 package Entity;
 
 public enum Gender {
-    Male("Male"), Female("Female"), Other("Other");
+    M("Male"), F("Female"), O("Other");
     private String genderLabel;
     Gender(String genderLabel) {
         this.genderLabel = genderLabel;

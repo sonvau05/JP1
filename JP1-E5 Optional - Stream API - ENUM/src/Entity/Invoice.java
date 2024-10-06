@@ -6,54 +6,24 @@ public class Invoice {
     private int id;
     private Customer customer;
     private double amount;
-    private LocalDateTime dateTime;
+    private LocalDateTime datetime;
 
-    public Invoice(int id, Customer customer, double amount, LocalDateTime dateTime) {
+    public Invoice(int id, Customer customer, double amount, LocalDateTime datetime) {
         this.id = id;
         this.customer = customer;
         this.amount = amount;
-        this.dateTime = dateTime;
+        this.datetime = datetime;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+    public int getId() { return id; }
+    public Customer getCustomer() { return customer; }
+    public double getAmount() { return amount; }
+    public LocalDateTime getDateTime() { return datetime; }
+    public void setDateTime(LocalDateTime datetime) { this.datetime = datetime; }
 
     @Override
     public String toString() {
-        return "Invoice{" +
-                "id=" + id +
-                ", customer=" + customer +
-                ", amount=" + amount +
-                ", dateTime=" + dateTime +
-                '}';
+        return "Invoice[id=" + id + ", customer=" + customer.toString() + ", amount=" + amount + "]";
     }
 }
+
