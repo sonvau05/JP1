@@ -1,24 +1,22 @@
 package Entity;
 
-import Exceptions.InvalidExceptions;
+import Enums.OrderStatus;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Order {
     private String id;
     private int customerId;
-    private LocalDateTime dateTime;
+    private Date date;
+    private OrderStatus status;
 
     public Order(String id, int customerId) {
-        if (!id.matches("ORDPM[0-9]{8}")) {
-            throw new InvalidExceptions.InvalidOrderIdException("Mã đơn hàng không đúng định dạng.");
-        }
         this.id = id;
         this.customerId = customerId;
-        this.dateTime = LocalDateTime.now();
+        this.date = new Date();
+        this.status = OrderStatus.PENDING;
     }
 
-    // Getters
     public String getId() {
         return id;
     }
@@ -27,8 +25,18 @@ public class Order {
         return customerId;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public Date getDate() {
+        return date;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 }
+
+
 

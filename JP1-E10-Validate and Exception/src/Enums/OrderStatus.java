@@ -1,5 +1,9 @@
 package Enums;
 
 public enum OrderStatus {
-    PENDING, COMPLETED, CANCELLED, PAID;
+    PENDING,
+    COMPLETED,
+    CANCELLED,
+    PAID
 }
+

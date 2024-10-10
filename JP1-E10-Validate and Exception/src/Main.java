@@ -1,27 +1,35 @@
-import Entity.Product;
-import Entity.Customer;
-import Entity.Order;
-import Entity.OrderDetail;
-import Exceptions.InvalidExceptions;
+import Entity.*;
+import Service.*;
+import Enums.OrderStatus;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            Product product1 = new Product("MS123456", "Sản phẩm A", 100);
-            System.out.println("Tạo sản phẩm thành công: " + product1.getName());
+        ProductService productService = new ProductService();
+        CustomerService customerService = new CustomerService();
+        OrderService orderService = new OrderService();
+        OrderDetailService orderDetailService = new OrderDetailService();
 
-            Customer customer1 = new Customer(1, "Nguyễn Văn A");
-            System.out.println("Tạo khách hàng thành công: " + customer1.getName());
+        Product product = new Product("MS000001", "Sản phẩm A", 100);
+        productService.addProduct(product);
+        System.out.println("Sản phẩm đã thêm: " + product.getId() + ", Tên: " + product.getName() + ", Số lượng: " + product.getQuantity());
 
-            Order order1 = new Order("ORDPM00000001", customer1.getId());
-            System.out.println("Tạo đơn hàng thành công: " + order1.getId());
+        Customer customer = new Customer(1, "Nguyễn Văn A");
+        customerService.addCustomer(customer);
+        System.out.println("ID khách hàng: " + customer.getId() + ", Tên: " + customer.getName());
 
-            OrderDetail orderDetail1 = new OrderDetail(1, order1.getId(), product1.getId(), 2);
-            System.out.println("Tạo chi tiết đơn hàng thành công: " + orderDetail1.getId());
-        } catch (InvalidExceptions.InvalidProductIdException | InvalidExceptions.InvalidProductNameException |
-                 InvalidExceptions.InvalidQuantityException | InvalidExceptions.InvalidCustomerNameException |
-                 InvalidExceptions.InvalidOrderIdException e) {
-            System.out.println(e.getMessage());
-        }
+        Order order = new Order("ORDPM00000001", customer.getId());
+        orderService.addOrder(order);
+        System.out.println("Đơn hàng đã thêm: " + order.getId() + ", Khách hàng ID: " + order.getId());
+
+        OrderDetail orderDetail = new OrderDetail(1, order.getId(), product.getId(), 2);
+        orderDetailService.addOrderDetail(orderDetail);
+        System.out.println("Chi tiết đơn hàng: ID: " + orderDetail.getId() + ", ID đơn hàng : " + orderDetail.getOrderId() + ", ID sản phẩm: " + orderDetail.getProductId() + ", Số lượng: " + orderDetail.getQuantity());
+
+        orderService.updateOrderStatus(order.getId(), OrderStatus.COMPLETED);
+        System.out.println("Trạng thái đơn hàng đã cập nhật: " + order.getId() + " - " + OrderStatus.COMPLETED);
     }
 }
+
+
+
+
