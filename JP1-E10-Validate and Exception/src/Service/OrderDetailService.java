@@ -1,29 +1,39 @@
 package Service;
 
 import Entity.OrderDetail;
-import Enums.OrderStatus;
+import IGeneric.IGenericService;
 import Validator.OrderDetailValidator;
-import java.util.HashMap;
-import java.util.Map;
 
-public class OrderDetailService {
-    private Map<Integer, OrderDetail> orderDetailMap = new HashMap<>();
+import java.util.ArrayList;
+import java.util.List;
 
-    public void addOrderDetail(OrderDetail orderDetail) {
-        OrderDetailValidator.validate(orderDetail);
-        if (orderDetailMap.containsKey(orderDetail.getId())) {
-            throw new IllegalArgumentException("Chi tiết đơn hàng đã tồn tại.");
-        }
-        orderDetailMap.put(orderDetail.getId(), orderDetail);
+public class OrderDetailService implements IGenericService<OrderDetail> {
+    private List<OrderDetail> orderDetails = new ArrayList<>();
+
+    @Override
+    public void add(OrderDetail orderDetail) {
+        OrderDetailValidator.validateQuantity(orderDetail.getQuantity());
+        orderDetails.add(orderDetail);
     }
 
-    public OrderDetail findOrderDetailById(int id) {
-        return orderDetailMap.get(id);
+    @Override
+    public OrderDetail getById(int id) {
+        return null;
     }
 
-    public void updateOrderDetailStatus(int id, OrderStatus status) {
-        OrderDetail orderDetail = findOrderDetailById(id);
-        orderDetail.setStatus(status);
+    @Override
+    public List<OrderDetail> getAll() {
+        return orderDetails;
+    }
+
+    @Override
+    public void update(OrderDetail orderDetail) {
+    }
+
+    @Override
+    public void deleteById(int id) {
     }
 }
+
+
 

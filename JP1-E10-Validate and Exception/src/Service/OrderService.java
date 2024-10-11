@@ -1,29 +1,44 @@
 package Service;
 
 import Entity.Order;
-import Enums.OrderStatus;
-import Validator.OrderValidator;
-import java.util.HashMap;
-import java.util.Map;
+import Exceptions.NotFoundOrderIdException;
+import IGeneric.IGenericService;
 
-public class OrderService {
-    private Map<String, Order> orderMap = new HashMap<>();
+import java.util.ArrayList;
+import java.util.List;
 
-    public void addOrder(Order order) {
-        OrderValidator.validate(order);
-        if (orderMap.containsKey(order.getId())) {
-            throw new IllegalArgumentException("Đơn hàng đã tồn tại.");
+public class OrderService implements IGenericService<Order> {
+    private List<Order> orders = new ArrayList<>();
+
+    @Override
+    public void add(Order order) {
+        orders.add(order);
+    }
+
+    @Override
+    public Order getById(int id) {
+        if (id < 0 || id >= orders.size()) {
+            throw new NotFoundOrderIdException(String.valueOf(id));
         }
-        orderMap.put(order.getId(), order);
+        return orders.get(id);
     }
 
-    public Order findOrderById(String id) {
-        return orderMap.get(id);
+    @Override
+    public List<Order> getAll() {
+        return orders;
     }
 
-    public void updateOrderStatus(String id, OrderStatus status) {
-        Order order = findOrderById(id);
-        order.setStatus(status);
+    @Override
+    public void update(Order order) {
+        // Update logic
+    }
+
+    @Override
+    public void deleteById(int id) {
+        // Delete logic
     }
 }
+
+
+
 

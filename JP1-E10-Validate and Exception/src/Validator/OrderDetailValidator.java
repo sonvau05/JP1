@@ -1,18 +1,13 @@
 package Validator;
 
-import Entity.OrderDetail;
 import Exceptions.InvalidQuantityException;
 
 public class OrderDetailValidator {
-
-    public static void validateOrderDetailQuantity(int quantity) {
+    public static void validateQuantity(int quantity) {
         if (quantity <= 0) {
-            throw new InvalidQuantityException("Số lượng bán ra không hợp lệ.");
+            throw new InvalidQuantityException("Số lượng phải lớn hơn 0.");
         }
     }
-
-    public static void validate(OrderDetail orderDetail) {
-        validateOrderDetailQuantity(orderDetail.getQuantity());
-    }
 }
+
 

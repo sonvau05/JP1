@@ -1,36 +1,40 @@
 package Service;
 
 import Entity.Product;
+import IGeneric.IGenericService;
 import Validator.ProductValidator;
-import Exceptions.NotEnoughInventoryNumberException;
-import java.util.HashMap;
-import java.util.Map;
 
-public class ProductService {
-    private Map<String, Product> productMap = new HashMap<>();
+import java.util.ArrayList;
+import java.util.List;
 
-    public void addProduct(Product product) {
-        ProductValidator.validate(product);
-        if (productMap.containsKey(product.getId())) {
-            throw new IllegalArgumentException("Sản phẩm đã tồn tại.");
-        }
-        productMap.put(product.getId(), product);
+public class ProductService implements IGenericService<Product> {
+    private List<Product> products = new ArrayList<>();
+
+    @Override
+    public void add(Product product) {
+        ProductValidator.validateProductId(product.getId());
+        products.add(product);
     }
 
-    public Product findProductById(String id) {
-        return productMap.get(id);
+    @Override
+    public Product getById(int id) {
+        return null;
     }
 
-    public void updateProductQuantity(String id, int quantity) {
-        Product product = findProductById(id);
-        product.setQuantity(quantity);
+    @Override
+    public List<Product> getAll() {
+        return products;
     }
 
-    public void checkInventory(String productId, int requiredQuantity) {
-        Product product = findProductById(productId);
-        if (product.getQuantity() < requiredQuantity) {
-            throw new NotEnoughInventoryNumberException("Không đủ số lượng tồn kho.");
-        }
+    @Override
+    public void update(Product product) {
+    }
+
+    @Override
+    public void deleteById(int id) {
     }
 }
+
+
+
 

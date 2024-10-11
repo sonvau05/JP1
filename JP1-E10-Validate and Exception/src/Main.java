@@ -1,34 +1,45 @@
-import Entity.*;
-import Service.*;
+import Entity.Customer;
+import Entity.Order;
+import Entity.OrderDetail;
+import Entity.Product;
 import Enums.OrderStatus;
+import Service.CustomerService;
+import Service.OrderDetailService;
+import Service.OrderService;
+import Service.ProductService;
 
 public class Main {
     public static void main(String[] args) {
-        ProductService productService = new ProductService();
         CustomerService customerService = new CustomerService();
         OrderService orderService = new OrderService();
+        ProductService productService = new ProductService();
         OrderDetailService orderDetailService = new OrderDetailService();
 
-        Product product = new Product("MS000001", "Sản phẩm A", 100);
-        productService.addProduct(product);
-        System.out.println("Sản phẩm đã thêm: " + product.getId() + ", Tên: " + product.getName() + ", Số lượng: " + product.getQuantity());
+        // Example usage
+        try {
+            Customer customer = new Customer(1, "Messi");
+            customerService.add(customer);
+            System.out.println("Customer added: " + customer.getName());
 
-        Customer customer = new Customer(1, "Nguyễn Văn A");
-        customerService.addCustomer(customer);
-        System.out.println("ID khách hàng: " + customer.getId() + ", Tên: " + customer.getName());
+            Product product = new Product("MS194124", "Product A", 100);
+            productService.add(product);
+            System.out.println("Product added: " + product.getId() + " - " + product.getName());
 
-        Order order = new Order("ORDPM00000001", customer.getId());
-        orderService.addOrder(order);
-        System.out.println("Đơn hàng đã thêm: " + order.getId() + ", Khách hàng ID: " + order.getId());
+            Order order = new Order("ORDPM01234567", customer.getId());
+            orderService.add(order);
+            System.out.println("Order created: " + order.getId());
 
-        OrderDetail orderDetail = new OrderDetail(1, order.getId(), product.getId(), 2);
-        orderDetailService.addOrderDetail(orderDetail);
-        System.out.println("Chi tiết đơn hàng: ID: " + orderDetail.getId() + ", ID đơn hàng : " + orderDetail.getOrderId() + ", ID sản phẩm: " + orderDetail.getProductId() + ", Số lượng: " + orderDetail.getQuantity());
-
-        orderService.updateOrderStatus(order.getId(), OrderStatus.COMPLETED);
-        System.out.println("Trạng thái đơn hàng đã cập nhật: " + order.getId() + " - " + OrderStatus.COMPLETED);
+            OrderDetail orderDetail = new OrderDetail(1, order.getId(), product.getId(), 10);
+            orderDetailService.add(orderDetail);
+            System.out.println("Order detail added: " + orderDetail.getQuantity());
+        } catch (RuntimeException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
     }
 }
+
+
+
 
 
 

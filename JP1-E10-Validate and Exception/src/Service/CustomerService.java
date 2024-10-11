@@ -1,23 +1,43 @@
 package Service;
 
 import Entity.Customer;
+import Exceptions.NotFoundCustomerIdException;
+import IGeneric.IGenericService;
 import Validator.CustomerValidator;
-import java.util.HashMap;
-import java.util.Map;
 
-public class CustomerService {
-    private Map<Integer, Customer> customerMap = new HashMap<>();
+import java.util.ArrayList;
+import java.util.List;
 
-    public void addCustomer(Customer customer) {
-        CustomerValidator.validate(customer);
-        if (customerMap.containsKey(customer.getId())) {
-            throw new IllegalArgumentException("Khách hàng đã tồn tại.");
-        }
-        customerMap.put(customer.getId(), customer);
+public class CustomerService implements IGenericService<Customer> {
+    private List<Customer> customers = new ArrayList<>();
+
+    @Override
+    public void add(Customer customer) {
+        CustomerValidator.validateCustomerName(customer.getName());
+        customers.add(customer);
     }
 
-    public Customer findCustomerById(int id) {
-        return customerMap.get(id);
+    @Override
+    public Customer getById(int id) {
+        if (id < 0 || id >= customers.size()) {
+            throw new NotFoundCustomerIdException(String.valueOf(id));
+        }
+        return customers.get(id);
+    }
+
+    @Override
+    public List<Customer> getAll() {
+        return customers;
+    }
+
+    @Override
+    public void update(Customer customer) {
+    }
+
+    @Override
+    public void deleteById(int id) {
     }
 }
+
+
 

@@ -1,20 +1,18 @@
 package Entity;
 
-import Enums.OrderStatus;
+import Exceptions.InvalidOrderIdException;
 
 import java.util.Date;
 
 public class Order {
     private String id;
     private int customerId;
-    private Date date;
-    private OrderStatus status;
+    private Date datetime;
 
     public Order(String id, int customerId) {
-        this.id = id;
+        setId(id);
         this.customerId = customerId;
-        this.date = new Date();
-        this.status = OrderStatus.PENDING;
+        this.datetime = new Date();
     }
 
     public String getId() {
@@ -25,18 +23,23 @@ public class Order {
         return customerId;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDatetime() {
+        return datetime;
     }
 
-    public OrderStatus getStatus() {
-        return status;
+    public void setId(String id) {
+        if (!id.matches("ORDPM[0-9]{8}")) {
+            throw new InvalidOrderIdException(id);
+        }
+        this.id = id;
     }
 
-    public void setStatus(OrderStatus status) {
-        this.status = status;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 }
+
+
 
 
 

@@ -1,6 +1,7 @@
 package Entity;
 
 import Enums.OrderStatus;
+import Exceptions.InvalidQuantityException;
 
 public class OrderDetail {
     private int id;
@@ -10,10 +11,10 @@ public class OrderDetail {
     private OrderStatus status;
 
     public OrderDetail(int id, String orderId, String productId, int quantity) {
-        this.id = id;
+        setId(id);
         this.orderId = orderId;
         this.productId = productId;
-        this.quantity = quantity;
+        setQuantity(quantity);
         this.status = OrderStatus.PENDING;
     }
 
@@ -37,10 +38,23 @@ public class OrderDetail {
         return status;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setQuantity(int quantity) {
+        if (quantity <= 0) {
+            throw new InvalidQuantityException("Số lượng không hợp lệ: " + quantity);
+        }
+        this.quantity = quantity;
+    }
+
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
 }
+
+
 
 
 
