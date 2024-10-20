@@ -1,7 +1,5 @@
 package Entity;
 
-import Entity.Gender;
-
 public class Customer {
     private int id;
     private String name;
@@ -15,14 +13,32 @@ public class Customer {
         this.discount = discount;
     }
 
-    public int getId() { return id; }
-    public String getName() { return name; }
-    public Gender getGender() { return gender; }
-    public int getDiscount() { return discount; }
-    public void setDiscount(int discount) { this.discount = discount; }
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
 
     @Override
     public String toString() {
-        return name + "(" + id + ")";
+        return String.format("%s(%d) - Gender: %s - Discount: %d%%", name, id, gender.getGenderLabel(), discount);
+    }
+
+    public void setDiscount(int newDiscount) {
+        this.discount = newDiscount;
     }
 }
